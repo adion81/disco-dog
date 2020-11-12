@@ -24,7 +24,10 @@ const Main = props => {
                 <tbody>
                     {
                         dogs.map((dog,i) => <tr key={i}>
-                                                <td>{dog.name}</td>
+                                                <td>
+                                                    <Link to={`/details/${dog._id}`}>{dog.name}</Link>
+                                                    
+                                                </td>
                                                 <td>
                                                     <Link className="btn btn-primary" to={`/edit/${dog._id}`} >Edit</Link>
                                                     <button className="btn btn-danger">Remove</button>
