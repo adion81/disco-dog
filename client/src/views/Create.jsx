@@ -24,6 +24,7 @@ const Create = props => {
                 ...dogForm,
                 isLit:!dogForm.isLit
             })
+            return;
         }
         setDogForm({
             ...dogForm,

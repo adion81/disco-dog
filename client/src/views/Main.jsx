@@ -4,12 +4,25 @@ import {Link} from '@reach/router';
 
 const Main = props => {
     const [dogs,setDogs] = useState([]);
+    const [bounce,setBounce] = useState(false);
 
     useEffect(() => {
         Axios.get('http://localhost:8000/api/dogs')
             .then(res => setDogs(res.data.results))
             .catch(err => console.log(err));
-    },[])
+    },[bounce])
+
+    const bounceDoggie = (id,name) => {
+        Axios.delete(`http://localhost:8000/api/dogs/destroy/${id}`)
+            .then(res => {
+                if(res.data.results){
+                    alert(`You removed ${name} from the Disco, you Monster!!!`)
+                    // creates state variable to re-render DOM
+                    setBounce(!bounce);
+                }
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         <>
@@ -30,7 +43,10 @@ const Main = props => {
                                                 </td>
                                                 <td>
                                                     <Link className="btn btn-primary" to={`/edit/${dog._id}`} >Edit</Link>
-                                                    <button className="btn btn-danger">Remove</button>
+                                                    <button 
+                                                        onClick={() => bounceDoggie(dog._id,dog.name)}
+                                                        className="btn btn-danger"
+                                                    >Remove</button>
                                                 </td>
                                             </tr>
                         )
